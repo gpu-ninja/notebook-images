@@ -27,6 +27,7 @@ RUN curl -fsSL -o /tmp/mambaforge.sh https://github.com/conda-forge/miniforge/re
     pip=${PIP_VERSION} \
   && conda clean -a -f -y \
   # Give the jupyter user the ability to manage python packages.
+  && echo "export PATH=${CONDA_DIR}/bin:$PATH" >> "${HOME}/.bashrc" \
   && chown -R ${NB_USER}:users "${CONDA_DIR}" "${HOME}"
 
 USER ${NB_USER}
@@ -38,6 +39,6 @@ RUN conda install -y -q \
 
 WORKDIR ${HOME}
 
-EXPOSE 8888
+EXPOSE 8888/tcp
 
 ENTRYPOINT ["/opt/conda/bin/jupyter", "lab", "--no-browser"]
