@@ -37,6 +37,11 @@ RUN conda install -y -q \
     jupyterlab=${JUPYTERLAB_VERSION} \
   && conda clean -a -f -y
 
+# Backup the user's home directory as we'll be bind mounting over it.
+USER root
+RUN tar -cf "/home/${NB_USER}.tar" -C "${HOME}" .
+
+USER ${NB_USER}
 WORKDIR ${HOME}
 
 EXPOSE 8888/tcp
