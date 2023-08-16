@@ -4,7 +4,8 @@ LABEL maintainer="damian@pecke.tt"
 # Set up the Jupyter user (jovyan is the convention).
 ENV NB_USER=jovyan \
   NB_UID=1000
-ENV HOME=/home/${NB_USER}
+ENV HOME=/home/${NB_USER} \
+  SHELL=/bin/bash
 RUN adduser --disabled-password --home "${HOME}" --shell=/bin/bash --uid=${NB_UID} "${NB_USER}"
 
 # Node.js is required for JupyterLab extensions.
